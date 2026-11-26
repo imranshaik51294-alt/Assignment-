@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CarePoint Clinic - Member 2</title>
+
+  <style>
+    /* ===== THEME: MEDICAL (clean clinic look) ===== */
+    :root {
+      --teal: #0a5f6b;
+      --teal-dark: #063f48;
+      --mint: #e4f5f2;
+      --sky: #f4fafb;
+      --text: #1d2f33;
+      --alert: #d9363e;
+      --line: #c7e2e0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body { font-family: "Segoe UI", Tahoma, Arial, sans-serif; color: var(--text); background: var(--sky); line-height: 1.6; }
+
+    /* ---------- Emergency strip ---------- */
+    .emergency {
+      background: var(--alert); color: #fff; text-align: center;
+      padding: 8px 12px; font-size: 0.95rem;
+    }
+    .emergency b { letter-spacing: 0.5px; }
+
+    /* ---------- Navigation ---------- */
+    .nav {
+      background: #fff; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; padding: 14px 6%; border-bottom: 1px solid var(--line);
+      position: sticky; top: 0; z-index: 5;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: var(--teal); }
+    /* medical cross drawn using CSS only */
+    .cross { width: 34px; height: 34px; background: var(--teal); border-radius: 8px; position: relative; }
+    .cross::before, .cross::after { content: ""; position: absolute; background: #fff; border-radius: 2px; }
+    .cross::before { width: 18px; height: 6px; top: 14px; left: 8px; }
+    .cross::after  { width: 6px; height: 18px; top: 8px; left: 14px; }
+    .nav a.link { color: var(--text); text-decoration: none; margin-left: 22px; }
+    .nav a.link:hover { color: var(--teal); border-bottom: 2px solid var(--teal); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(120deg, var(--teal-dark), var(--teal));
+      color: #fff; padding: 60px 6%; display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
+    }
+    .hero .text { flex: 1 1 340px; }
+    .hero h1 { font-size: 2.6rem; line-height: 1.2; margin-bottom: 14px; }
+    .hero p { max-width: 480px; margin-bottom: 24px; color: #d3eeee; }
+    .btn {
+      display: inline-block; background: #fff; color: var(--teal); font-weight: 700;
+      padding: 12px 26px; border-radius: 8px; text-decoration: none; border: none; font-size: 1rem; cursor: pointer;
+    }
+    .btn:hover { background: var(--mint); }
+    .btn.solid { background: var(--teal); color: #fff; }
+    .btn.solid:hover { background: var(--teal-dark); }
+
+    /* heartbeat line (SVG-free, CSS only) */
+    .stats { flex: 1 1 260px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; padding: 16px; text-align: center; }
+    .stat b { display: block; font-size: 1.9rem; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 44px 6%; }
+    h2 { color: var(--teal); font-size: 1.7rem; margin-bottom: 20px; }
+    h2::after { content: ""; display: block; width: 60px; height: 4px; background: var(--alert); margin-top: 6px; border-radius: 2px; }
+
+    /* ---------- Services ---------- */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .service { background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--teal); border-radius: 8px; padding: 20px; }
+    .service:hover { background: var(--mint); }
+    .service h3 { color: var(--teal-dark); margin-bottom: 6px; }
+
+    /* ---------- Doctors table ---------- */
+    .tablebox { overflow-x: auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 520px; }
+    th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+    th { background: var(--teal); color: #fff; }
+    tr:hover td { background: var(--mint); }
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 0.85rem; }
+    .tag.on  { background: #d8f3e3; color: #14733f; }
+    .tag.off { background: #fde1e2; color: var(--alert); }
+
+    /* ---------- Appointment form ---------- */
+    .booking { background: var(--mint); }
+    form { background: #fff; max-width: 680px; padding: 26px; border-radius: 10px; border: 1px solid var(--line); }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .row > div { flex: 1 1 240px; }
+    label { display: block; font-weight: 600; margin: 12px 0 4px; }
+    input, select, textarea {
+      width: 100%; padding: 10px; font: inherit; border: 1px solid #9ec6c4; border-radius: 6px; background: var(--sky);
+    }
+    input:focus, select:focus, textarea:focus { outline: 3px solid #b5e3df; border-color: var(--teal); }
+    .radios label { display: inline-block; font-weight: normal; margin-right: 16px; }
+    .radios input { width: auto; }
+    form .btn { margin-top: 18px; }
+
+    footer { background: var(--teal-dark); color: #bfe3e3; text-align: center; padding: 20px; }
+
+    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .nav a.link { margin: 8px 14px 0 0; } }
+  </style>
+</head>
+
+<body>
+  <div class="emergency"><b>EMERGENCY?</b> Call our 24x7 ambulance line: 108</div>
+
+  <div class="nav">
+    <div class="brand"><span class="cross"></span> CarePoint Clinic</div>
+    <div>
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#doctors">Doctors</a>
+      <a class="link" href="#book">Book</a>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="text">
+      <h1>Caring for you,<br>every single day</h1>
+      <p>General health, child care, heart checks and lab tests under one roof. Book an appointment in two minutes.</p>
+      <a href="#book" class="btn">Book appointment</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>25+</b>Doctors</div>
+      <div class="stat"><b>12k</b>Patients</div>
+      <div class="stat"><b>24x7</b>Pharmacy</div>
+      <div class="stat"><b>15 yrs</b>Of service</div>
+    </div>
+  </header>
+
+  <section id="services">
+    <h2>Our services</h2>
+    <div class="grid">
+      <div class="service"><h3>General Medicine</h3><p>Fever, infections, diabetes and blood pressure care.</p></div>
+      <div class="service"><h3>Paediatrics</h3><p>Vaccinations and health checks for children.</p></div>
+      <div class="service"><h3>Cardiology</h3><p>ECG, echo tests and heart health advice.</p></div>
+      <div class="service"><h3>Laboratory</h3><p>Blood tests with reports on the same day.</p></div>
+    </div>
+  </section>
+
+  <section id="doctors">
+    <h2>Our doctors</h2>
+    <div class="tablebox">
+      <table>
+        <tr><th>Doctor</th><th>Speciality</th><th>Timing</th><th>Status</th></tr>
+        <tr><td>Dr. Anita Rao</td><td>General Medicine</td><td>9 AM - 1 PM</td><td><span class="tag on">Available</span></td></tr>
+        <tr><td>Dr. Suresh Kumar</td><td>Cardiology</td><td>2 PM - 6 PM</td><td><span class="tag on">Available</span></td></tr>
+        <tr><td>Dr. Meera Nair</td><td>Paediatrics</td><td>10 AM - 4 PM</td><td><span class="tag off">On leave</span></td></tr>
+        <tr><td>Dr. Imran Khan</td><td>Dermatology</td><td>11 AM - 5 PM</td><td><span class="tag on">Available</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="book" class="booking">
+    <h2>Book an appointment</h2>
+    <form action="#" method="post">
+      <div class="row">
+        <div><label for="pname">Patient name</label><input type="text" id="pname" placeholder="Full name" required></div>
+        <div><label for="age">Age</label><input type="number" id="age" min="0" max="120" placeholder="Years"></div>
+      </div>
+
+      <div class="row">
+        <div><label for="phone">Phone</label><input type="tel" id="phone" placeholder="10-digit number" pattern="[0-9]{10}" required></div>
+        <div><label for="date">Preferred date</label><input type="date" id="date" required></div>
+      </div>
+
+      <label for="dept">Department</label>
+      <select id="dept">
+        <option>General Medicine</option><option>Paediatrics</option><option>Cardiology</option><option>Dermatology</option>
+      </select>
+
+      <label>Visit type</label>
+      <div class="radios">
+        <label><input type="radio" name="visit" checked> First visit</label>
+        <label><input type="radio" name="visit"> Follow-up</label>
+        <label><input type="radio" name="visit"> Report review</label>
+      </div>
+
+      <label for="problem">Describe the problem</label>
+      <textarea id="problem" rows="3" placeholder="Symptoms, how long, any allergies"></textarea>
+
+      <button type="submit" class="btn solid">Confirm booking</button>
+    </form>
+  </section>
+
+  <footer>&copy; 2026 CarePoint Clinic | Made by Member 2</footer>
+</body>
+</html>
